@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory Liquid Properties for Hamilton STAR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">Laboratory Liquid Properties for Hamilton STAR</h1>
+        
+        <div class="filter-section">
+            <label class="filter-label">Filter by Liquid Class:</label>
+            <select id="liquidClassSelect" class="filter-select">
+                <option value="">All Liquid Classes</option>
+                {% for class_name in liquid_classes %}
+                <option value="{{ class_name }}">{{ class_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div id="liquidClassDetails" class="liquid-class-details" style="display: none;">
+            <h2 id="classTitle" class="class-title"></h2>
+            <p id="classDescription" class="class-description"></p>
+            
+            <div class="parameters-grid">
+                <div class="parameter-card" data-param="p_speed">
+                    <p><span class="parameter-label">Pipetting Speed:</span> <span id="pSpeedInfo"></span></p>
+                </div>
+                <div class="parameter-card" data-param="d_speed">
+                    <p><span class="parameter-label">Dispensing Speed:</span> <span id="dSpeedInfo"></span></p>
+                </div>
+                <div class="parameter-card" data-param="air_gap">
+                    <p><span class="parameter-label">Air Gap:</span> <span id="airGapInfo"></span></p>
+                </div>
+                <div class="parameter-card" data-param="blowout">
+                    <p><span class="parameter-label">Blowout:</span> <span id="blowoutInfo"></span></p>
+                </div>
+                <div class="parameter-card" data-param="z_offset">
+                    <p><span class="parameter-label">Z-Offset:</span> <span id="zOffsetInfo"></span></p>
+                </div>
+                <div class="parameter-card" data-param="tips">
+                    <p><span class="parameter-label">Recommended Tips:</span> <span id="tipsInfo"></span></p>
+                </div>
+            </div>
+            
+            <div id="parameterDetails" class="parameter-details" style="display: none;">
+                <h3 id="parameterTitle" class="parameter-title"></h3>
+                <pre id="venusSettings" class="venus-settings"></pre>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="liquids-table">
+                <thead>
+                    <tr>
+                        <th>Liquid</th>
+                        <th>Density (g/mL)</th>
+                        <th>Viscosity (cP)</th>
+                        <th>Molar Weight (g/mol)</th>
+                        <th>Liquid Class</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="liquidsTableBody">
+                    {% for liquid in liquids %}
+                    <tr class="liquid-row">
+                        <td>{{ liquid.name }}</td>
+                        <td>{{ liquid.density }}</td>
+                        <td>{{ liquid.viscosity }}</td>
+                        <td>{{ liquid.molar_weight }}</td>
+                        <td>{{ liquid.liquid_class }}</td>
+                        <td>{{ liquid.notes }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html> 
